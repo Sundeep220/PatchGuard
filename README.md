@@ -1,256 +1,122 @@
-# Project Name Suggestions
+# PatchPilot AI
 
-“VulnFix” is too generic.
-You want something:
+## Autonomous Dependency Remediation & Governance Platform
 
-* modern
-* enterprise-grade
-* security-oriented
-* automation-focused
-* memorable
+PatchPilot AI is an AI-driven dependency remediation platform designed for enterprise Spring Boot applications. The system autonomously analyzes vulnerability reports, determines safe remediation strategies, applies dependency upgrades, validates builds/tests, and generates merge requests for human review.
 
-Here are MUCH better names:
+Built using:
 
-| Name                    | Why It’s Good                   |
-| ----------------------- | ------------------------------- |
-| **PatchPilot AI**       | Best balance of enterprise + AI |
-| **SecureFlow AI**       | Strong DevSecOps vibe           |
-| **Dependency Sentinel** | Security-focused                |
-| **PatchForge AI**       | Strong engineering branding     |
-| **MergeShield AI**      | Tied to MR protection           |
-| **AutoPatch AI**        | Simple and clear                |
-| **CVEFlow**             | Security workflow branding      |
-| **PatchGuard AI**       | Enterprise feel                 |
-| **SafeMerge AI**        | Git/MR oriented                 |
-| **Dependra AI**         | Modern SaaS-style name          |
+* Python
+* OpenAI Agents SDK
+* Spring Boot
+* Maven
+* Git/GitLab
+* MCP (Model Context Protocol)
+* Evaluator–optimizer agent loops
+* Dependency graph intelligence
 
-# My Recommendation
+The platform integrates with:
 
-# **PatchPilot AI**
+* GitLab Dependency Scanning
+* GitHub Dependabot
+* Snyk
+* OSV scanners
+* CI/CD pipelines
 
-## Autonomous Dependency Remediation Agent
-
-This sounds:
-
-* professional
-* realistic
-* startup-quality
-* enterprise-ready
+Its goal is to eliminate manual dependency remediation workflows and reduce sprint-end merge blockers caused by HIGH and CRITICAL vulnerabilities. 
 
 ---
 
-# 1. Project Vision
+# Problem Statement
 
-PatchPilot AI is an autonomous dependency remediation system for enterprise Spring Boot applications.
-
-The system continuously:
-
-* monitors GitLab dependency scanning reports
-* identifies vulnerable dependencies
-* analyzes safe upgrade paths
-* updates dependency versions automatically
-* validates builds/tests
-* creates GitLab merge requests for review
-
-The goal is to:
-
-# eliminate sprint-end merge blockers caused by dependency vulnerabilities.
-
----
-
-# 2. Real-World Problem Statement
-
-Modern enterprise applications depend heavily on:
+Modern enterprise applications rely heavily on:
 
 * Spring Boot starters
 * Maven dependencies
+* BOM-managed libraries
 * transitive dependencies
-* third-party libraries
+* third-party ecosystems
 
-GitLab Dependency Scanning can block merges when:
+Security scanners such as:
 
-* HIGH vulnerabilities detected
-* CRITICAL vulnerabilities detected
+* GitLab Dependency Scanning
+* Dependabot
+* Snyk
 
-This creates major engineering pain:
+frequently detect:
 
-* sprint delays
-* blocked releases
-* manual remediation work
-* emergency fixes
-* engineering productivity loss
+* HIGH vulnerabilities
+* CRITICAL vulnerabilities
+* transitive dependency risks
 
-This is especially common in:
+These vulnerabilities often:
 
-* Spring Boot microservices
-* enterprise Java systems
-* regulated environments
+* block merge requests
+* delay releases
+* create operational overhead
+* require repetitive manual remediation
 
-GitLab dependency scanning is commonly integrated into CI/CD security workflows. ([about.gitlab.com][1])
+Developers typically must:
 
----
+* analyze vulnerability reports
+* identify safe upgrade paths
+* update dependencies
+* resolve version conflicts
+* validate builds/tests
+* create remediation PRs/MRs
 
-# 3. Core Problem Example
-
-Example:
-
-```xml id="3sh1my"
-<parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>4.0.3</version>
-</parent>
-```
-
-Dependency scanning detects:
-
-```text id="3mq6z4"
-HIGH vulnerability in transitive dependency
-```
-
-Current workflow:
-
-```text id="z2v2ca"
-Developer manually:
-- investigates CVE
-- finds safe version
-- updates pom.xml
-- runs tests
-- creates MR
-```
-
-This wastes engineering time.
+This becomes repetitive, time-consuming engineering work.
 
 ---
 
-# 4. Proposed Solution
+# Solution Overview
 
-PatchPilot AI automates this workflow.
+PatchPilot AI automates the entire dependency remediation lifecycle using AI-driven orchestration combined with deterministic execution and runtime validation.
 
----
+## Automated Workflow
 
-# Automated Workflow
-
-```text id="xq0t3u"
-Scheduled GitLab Pipeline
+```text
+Dependency Scan Report
         ↓
-Dependency Scanning Results
+Planner Agent
         ↓
-PatchPilot AI Agent
+Remediation Plan
         ↓
-Analyze vulnerabilities
+Patch Engine
         ↓
-Determine safe upgrades
+Build/Test Validation
         ↓
-Update pom.xml
+Dependency Graph Analysis
         ↓
-Run Maven validation
+Risk Evaluation
         ↓
-Run tests
+Retry / Optimization Loop
         ↓
-Generate remediation summary
-        ↓
-Create GitLab Merge Request
-        ↓
-Developer reviews and merges
+GitLab Merge Request
 ```
 
----
+The platform continuously:
 
-# 5. Why This Is an Excellent AI Agent Use Case
-
-This is NOT:
-
-```text id="k0m49x"
-"generate random code"
-```
-
-This IS:
-
-```text id="1o2g7p"
-reasoning + orchestration + validation + automation
-```
-
-The AI agent must:
-
-* interpret vulnerability reports
-* understand dependency graphs
-* reason about safe upgrades
-* validate compatibility
-* execute workflows
-* recover from failures
-
-This is EXACTLY where agents provide real value.
+* ingests vulnerability reports
+* analyzes dependency ecosystems
+* reasons about safe upgrade paths
+* applies dependency updates
+* validates compatibility
+* evaluates remediation risk
+* retries failed strategies
+* generates remediation summaries
+* creates merge requests for review
 
 ---
 
-# 6. Why OpenAI Agents SDK Fits Perfectly
+# Core Architecture
 
-The project naturally uses:
-
-* tool orchestration
-* structured outputs
-* multi-step reasoning
-* workflow execution
-* retries
-* async execution
-
-The Agents SDK is designed specifically for orchestration-heavy agent workflows. ([VulnInfo Guide][2])
-
----
-
-# 7. Why MCP Fits Perfectly
-
-MCP becomes the standardized tool layer.
-
-Instead of:
-
-```text id="q8wsvs"
-agent directly calling random APIs
-```
-
-You build:
-
-```text id="v2d4s8"
-Agent → MCP tools → external systems
-```
-
-MCP standardizes:
-
-* GitLab access
-* filesystem operations
-* Maven execution
-* vulnerability analysis
-* pipeline orchestration
-
----
-
-# 8. Project Goals
-
-By the end, PatchPilot AI should:
-
-| Capability                         | Description                      |
-| ---------------------------------- | -------------------------------- |
-| Parse GitLab vulnerability reports | Read dependency scanning results |
-| Understand Maven dependency trees  | Analyze parent + transitive deps |
-| Determine safe upgrades            | Version reasoning                |
-| Modify pom.xml automatically       | Intelligent dependency updates   |
-| Run validation workflows           | Build + test execution           |
-| Generate remediation summaries     | Explain changes                  |
-| Create GitLab MRs                  | Automated remediation            |
-| Support approval workflows         | Human-in-the-loop                |
-| Provide rollback safety            | Failed patch recovery            |
-
----
-
-# 9. High-Level Architecture
-
-```text id="x2mkb0"
+```text
                     ┌─────────────────────┐
-                    │   GitLab Pipeline   │
+                    │ GitLab CI Pipeline  │
                     └──────────┬──────────┘
                                │
-                    Dependency Scan Results
+                    Vulnerability Reports
                                │
                                ▼
                 ┌──────────────────────────┐
@@ -261,46 +127,304 @@ By the end, PatchPilot AI should:
                            ▼
                 ┌──────────────────────────┐
                 │  OpenAI Agents Runtime   │
-                └──────────────────────────┘
-
-                   Planner / Patch Agent
-
+                └──────────┬───────────────┘
+                           │
+                    Planner Agent
                            │
                            ▼
-
                     MCP Tool Layer
 
-       GitLab MCP
-       Filesystem MCP
-       Maven MCP
-       Dependency Analyzer MCP
-       Terminal MCP
+        • GitLab Integration
+        • Filesystem Operations
+        • Maven Execution
+        • Dependency Analysis
+        • Git Operations
 
                            │
                            ▼
 
-                 Local Git Repository Clone
+                 Isolated Repository Clone
 ```
 
 ---
 
-# 10. Recommended Scope (IMPORTANT)
+# Core Engineering Concepts
 
-KEEP THIS PROJECT FOCUSED.
+## Evaluator–Optimizer Architecture
 
-Do NOT:
+PatchPilot follows an evaluator–optimizer architecture instead of relying on single-shot AI generation.
 
-* support all ecosystems
-* support all languages
-* support all package managers
+```text
+Vulnerability Report
+        ↓
+Planner Agent
+        ↓
+Remediation Plan
+        ↓
+Patch Execution
+        ↓
+Build/Test Evaluation
+        ↓
+Dependency Analysis
+        ↓
+Failure Feedback
+        ↓
+Optimizer Retry
+```
 
-Start with:
+The system:
 
-# ONE stack
+* evaluates remediation results
+* analyzes failures
+* retries corrective strategies
+* avoids repeating failed actions
+
+This architecture mirrors modern autonomous coding systems such as:
+
+* Devin
+* SWE-agent
+* Windsurf
+* Copilot Agent Mode
 
 ---
 
-# Recommended Initial Scope
+## Autonomous Planning
+
+The planner agent:
+
+* analyzes vulnerabilities
+* reasons about dependency ecosystems
+* generates remediation strategies
+* adapts after failures
+* orchestrates multi-step dependency operations
+
+Example remediation plan:
+
+```json
+{
+  "operations": [
+    {
+      "action": "update_dependency",
+      "dependency": "com.fasterxml.jackson.core:jackson-databind",
+      "version": "2.17.3"
+    },
+    {
+      "action": "remove_explicit_version",
+      "dependency": "com.fasterxml.jackson.core:jackson-databind"
+    }
+  ]
+}
+```
+
+---
+
+## BOM-Aware Dependency Intelligence
+
+PatchPilot dynamically analyzes Maven ecosystems using:
+
+```bash
+mvn help:effective-pom
+```
+
+This enables detection of:
+
+* BOM-managed dependencies
+* inherited versions
+* parent-managed libraries
+* transitive ownership
+
+The system intelligently determines when:
+
+* explicit versions should be updated
+* versions should be removed
+* parent BOM upgrades are safer
+
+---
+
+## Dependency Graph Intelligence
+
+PatchPilot parses Maven dependency trees into structured dependency graphs supporting:
+
+* resolved dependencies
+* scopes
+* transitive relationships
+* graph depth analysis
+* duplicate dependency detection
+* ecosystem drift analysis
+
+The platform can identify:
+
+* shadowed dependencies
+* duplicate major versions
+* conflicting ecosystems
+* dependency version drift
+
+Example:
+
+```text
+Jackson 2.x + Jackson 3.x
+```
+
+classified as:
+
+```text
+WARNING
+```
+
+instead of immediate failure.
+
+---
+
+## Runtime Validation & Risk Governance
+
+After remediation, the platform performs:
+
+* Maven build validation
+* test execution
+* residual vulnerability verification
+* semantic version risk analysis
+* compatibility checks
+
+The governance layer supports:
+
+* confidence scoring
+* warning classifications
+* risk-aware remediation evaluation
+
+instead of simplistic binary pass/fail validation.
+
+---
+
+## Rollback & Recovery
+
+Before each remediation attempt:
+
+* Git checkpoints are created
+
+On remediation failure:
+
+* automatic rollback is applied
+
+This prevents repository corruption and enables safe autonomous retries.
+
+---
+
+# Major Components
+
+| Component                        | Responsibility                              |
+| -------------------------------- | ------------------------------------------- |
+| Planner Agent                    | Generates remediation strategies            |
+| Patch Engine                     | Applies deterministic dependency operations |
+| PomService                       | Safely modifies pom.xml                     |
+| EffectivePomService              | BOM-aware dependency analysis               |
+| DependencyGraphService           | Parses dependency trees                     |
+| EvaluatorService                 | Runtime validation and governance           |
+| VulnerabilityVerificationService | Detects residual vulnerable versions        |
+| RiskAnalysisService              | Confidence and risk scoring                 |
+| SemanticVersionService           | Upgrade risk analysis                       |
+| OutputParserService              | Structured LLM output sanitization          |
+| CheckpointService                | Git rollback and recovery                   |
+| TerminalService                  | Shell/Maven execution                       |
+| GitService                       | Git diff and MR integration                 |
+
+---
+
+# Technology Stack
+
+## AI & Orchestration
+
+| Area               | Technology                   |
+| ------------------ | ---------------------------- |
+| Agent Framework    | OpenAI Agents SDK            |
+| Protocol           | MCP (Model Context Protocol) |
+| LLM                | GPT-5.5                      |
+| Structured Outputs | Pydantic                     |
+
+---
+
+## Backend
+
+| Area          | Technology |
+| ------------- | ---------- |
+| API           | FastAPI    |
+| Async Runtime | asyncio    |
+| Validation    | Pydantic   |
+| Logging       | structlog  |
+
+---
+
+## Java Ecosystem
+
+| Area       | Technology   |
+| ---------- | ------------ |
+| Framework  | Spring Boot  |
+| Build Tool | Apache Maven |
+| Testing    | JUnit        |
+
+---
+
+## DevOps & Infrastructure
+
+| Area       | Technology |
+| ---------- | ---------- |
+| SCM        | GitLab     |
+| CI/CD      | GitLab CI  |
+| Containers | Docker     |
+
+---
+
+## Observability
+
+| Area       | Technology |
+| ---------- | ---------- |
+| Tracing    | Langfuse   |
+| Metrics    | Prometheus |
+| Dashboards | Grafana    |
+
+---
+
+# Security & Governance
+
+## Human-in-the-Loop Approval
+
+PatchPilot never auto-merges changes.
+
+Workflow:
+
+```text
+AI creates MR
+→ developer reviews
+→ developer approves
+→ merge occurs
+```
+
+---
+
+## Sandboxed Execution
+
+All remediation operations run inside:
+
+* isolated repository clones
+* restricted environments
+* containerized workflows
+
+---
+
+## Auditability
+
+The platform tracks:
+
+* vulnerabilities analyzed
+* dependency changes
+* commands executed
+* validation results
+* merge requests created
+
+---
+
+# Current Scope
+
+PatchPilot intentionally focuses on a single ecosystem to maintain high-quality remediation intelligence.
 
 | Area       | Stack                      |
 | ---------- | -------------------------- |
@@ -311,455 +435,86 @@ Start with:
 | Scanner    | GitLab Dependency Scanning |
 | Runtime    | Python                     |
 
-This is PERFECT.
+The platform currently trusts external scanners such as:
+
+* GitLab Dependency Scanning
+* Dependabot
+* Snyk
+
+and focuses specifically on intelligent remediation orchestration rather than vulnerability discovery itself.
 
 ---
 
-# 11. Core Components
+# Key Capabilities
 
-# Component 1 — PatchPilot API
+PatchPilot currently supports:
 
-## Responsibilities
-
-* trigger workflows
-* expose APIs
-* manage agent execution
-* stream workflow updates
-
-## Tech
-
-* FastAPI
-* asyncio
-* Pydantic
-
----
-
-# Component 2 — AI Agent Runtime
-
-MOST IMPORTANT COMPONENT.
-
-Responsibilities:
-
-* analyze vulnerabilities
-* decide upgrade strategies
-* orchestrate tools
-* handle retries
-* generate summaries
+* autonomous dependency remediation
+* Maven ecosystem reasoning
+* BOM-aware upgrades
+* dependency graph intelligence
+* rollback recovery
+* runtime validation
+* evaluator–optimizer retry loops
+* residual vulnerability verification
+* semantic version risk analysis
+* risk-aware governance
+* structured remediation planning
 
 ---
 
-# Component 3 — MCP Layer
-
-Tool abstraction layer.
-
-Responsibilities:
-
-* GitLab integration
-* filesystem access
-* Maven execution
-* dependency graph analysis
-
----
-
-# Component 4 — Local Sandbox Workspace
-
-Agent operates inside isolated repository clone.
-
-Responsibilities:
-
-* update pom.xml
-* run tests
-* validate builds
-* generate diffs
-
----
-
-# 12. Agent Design
-
-Start SIMPLE.
-
-You only need:
-
-# ONE orchestrator agent initially.
-
----
-
-# Patch Agent Responsibilities
-
-The agent:
-
-1. reads vulnerability report
-2. analyzes affected dependency
-3. determines upgrade strategy
-4. updates pom.xml
-5. runs tests
-6. validates compatibility
-7. creates MR
-8. generates remediation summary
-
----
-
-# Future Optional Agents
-
-Later you can add:
-
-| Agent               | Purpose                      |
-| ------------------- | ---------------------------- |
-| Compatibility Agent | Analyze breaking changes     |
-| Security Agent      | Risk validation              |
-| Test Agent          | Advanced regression analysis |
-| Changelog Agent     | Migration analysis           |
-
-But NOT initially.
-
----
-
-# 13. MCP Strategy
-
-And yes:
-
-# you SHOULD use GitLab APIs + existing MCP integrations first.
-
-You do NOT need to build everything yourself.
-
-That is the correct engineering decision.
-
----
-
-# Recommended MCP Usage
-
-# Use Existing:
-
-* GitLab MCP integrations
-* filesystem MCP
-* shell/terminal MCP
-
-# Build Custom:
-
-* Maven dependency analysis tools
-* compatibility analysis tools
-* semantic version risk scoring
-
-THAT is where your unique intelligence layer lives.
-
----
-
-# 14. Suggested MCP Tools
-
-# GitLab MCP
-
-Use existing integrations.
-
-Tools:
-
-```python id="gmsv9g"
-get_vulnerability_report()
-create_merge_request()
-comment_on_mr()
-fetch_pipeline_status()
-```
-
----
-
-# Filesystem MCP
-
-```python id="n9p0q4"
-read_file()
-write_file()
-search_pom()
-```
-
----
-
-# Terminal MCP
-
-```python id="bq8u2r"
-run_maven_tests()
-run_build()
-run_dependency_tree()
-```
-
----
-
-# Custom Dependency Analyzer MCP
-
-VERY IMPORTANT.
-
-This becomes your:
-
-# intelligence layer
-
-Tools:
-
-```python id="59bfz4"
-analyze_dependency_graph()
-find_safe_upgrade()
-detect_breaking_change_risk()
-```
-
-THIS is what makes your project unique.
-
----
-
-# 15. Tech Stack
-
-# AI Layer
-
-| Area               | Tech                                                                                                |
-| ------------------ | --------------------------------------------------------------------------------------------------- |
-| Agent Framework    | [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/?utm_source=chatgpt.com)          |
-| Protocol           | [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction?utm_source=chatgpt.com) |
-| LLM                | GPT-5.5                                                                                             |
-| Structured Outputs | Pydantic                                                                                            |
-
----
-
-# Backend Layer
-
-| Area          | Tech                                                            |
-| ------------- | --------------------------------------------------------------- |
-| API           | [FastAPI](https://fastapi.tiangolo.com/?utm_source=chatgpt.com) |
-| Async Runtime | asyncio                                                         |
-| Validation    | Pydantic                                                        |
-| Logging       | structlog                                                       |
-
----
-
-# Java Layer
-
-| Area       | Tech                                                                         |
-| ---------- | ---------------------------------------------------------------------------- |
-| Framework  | [Spring Boot](https://spring.io/projects/spring-boot?utm_source=chatgpt.com) |
-| Build Tool | [Apache Maven](https://maven.apache.org/?utm_source=chatgpt.com)             |
-| Testing    | JUnit                                                                        |
-
----
-
-# DevOps Layer
-
-| Area       | Tech                                                       |
-| ---------- | ---------------------------------------------------------- |
-| SCM        | [GitLab](https://about.gitlab.com/?utm_source=chatgpt.com) |
-| CI/CD      | GitLab CI                                                  |
-| Containers | Docker                                                     |
-
----
-
-# Observability Layer
-
-| Area       | Tech       |
-| ---------- | ---------- |
-| Tracing    | Langfuse   |
-| Metrics    | Prometheus |
-| Dashboards | Grafana    |
-
----
-
-# 16. Security Design
-
-VERY IMPORTANT.
-
----
-
-# Human Approval Required
-
-The AI agent should NEVER auto-merge.
-
-Workflow:
-
-```text id="sr5j6y"
-AI creates MR
-→ human reviews
-→ human merges
-```
-
-This makes the project realistic.
-
----
-
-# Sandboxed Execution
-
-Agent operates inside:
-
-* isolated repository clone
-* Docker container
-* restricted environment
-
----
-
-# Audit Logging
-
-Track:
-
-* vulnerability analyzed
-* dependency upgraded
-* commands executed
-* tests run
-* MR created
-
----
-
-# 17. Advanced Features (Later)
-
-# Phase 2 Ideas
-
----
-
-# Compatibility Risk Scoring
-
-Example:
-
-```text id="yuq0ye"
-Risk Level: LOW
-Reason:
-- patch version upgrade
-- no API-breaking changes detected
-```
-
----
-
-# Changelog Analysis
-
-Agent summarizes:
-
-* migration notes
-* breaking changes
-* deprecated APIs
-
----
-
-# Automatic Rollback
-
-If tests fail:
-
-```text id="y4lmxn"
-revert dependency update
-```
-
----
-
-# Slack Notifications
-
-```text id="9t9r5k"
-3 HIGH vulnerabilities fixed automatically
-```
-
----
-
-# Multi-Repo Support
-
-Support:
-
-* multiple services
-* microservice repos
-* organization-wide scanning
-
----
-
-# 18. Development Roadmap
-
-# Phase 1 — MVP
-
-Build:
-
-* GitLab scan ingestion
-* vulnerability parsing
-* pom.xml updates
-* test execution
-* MR creation
-
-Goal:
-
-# End-to-end working workflow
-
----
-
-# Phase 2 — Intelligence Layer
-
-Build:
-
-* dependency graph analysis
+# Why This Project Is Strong
+
+PatchPilot demonstrates advanced AI systems engineering concepts including:
+
+* evaluator–optimizer loops
+* autonomous remediation
+* deterministic execution
+* runtime validation
+* dependency graph intelligence
+* rollback recovery
+* failure-aware planning
 * semantic version reasoning
-* compatibility scoring
+* structured tool orchestration
+* enterprise DevSecOps workflows
 
-Goal:
+This goes significantly beyond:
 
-# Smarter remediation
+* generic chatbot applications
+* basic RAG demos
+* wrapper-style AI projects
 
----
-
-# Phase 3 — Production Features
-
-Build:
-
-* observability
-* retries
-* audit logs
-* approvals
-* Docker sandboxing
-
-Goal:
-
-# Enterprise readiness
+because it solves a real enterprise software supply chain security problem.
 
 ---
 
-# 19. Why This Project Is Extremely Strong
+# Future Enhancements
 
-This project demonstrates:
+Potential future capabilities include:
 
-| Skill                          | Demonstrated |
-| ------------------------------ | ------------ |
-| AI engineering                 | ✅            |
-| OpenAI Agents SDK              | ✅            |
-| MCP                            | ✅            |
-| DevSecOps                      | ✅            |
-| CI/CD automation               | ✅            |
-| backend engineering            | ✅            |
-| orchestration                  | ✅            |
-| enterprise workflows           | ✅            |
-| async systems                  | ✅            |
-| software supply chain security | ✅            |
-
-This is FAR stronger than:
-
-* generic chatbot apps
-* simple RAG demos
-* wrapper applications
-
-because it solves:
-
-# a REAL enterprise engineering problem.
+* compatibility risk scoring
+* changelog analysis
+* Slack/MS Teams notifications
+* organization-wide remediation
+* multi-repository orchestration
+* advanced regression analysis
+* automated rollback strategies
+* semantic migration analysis
 
 ---
 
-# 20. Final Product Vision
+# Final Vision
 
-PatchPilot AI becomes:
+PatchPilot AI aims to become:
 
-```text id="mrxghn"
-An autonomous dependency remediation system
-for enterprise Spring Boot applications
-```
+> An autonomous dependency remediation and governance platform for enterprise software ecosystems.
 
-that:
+The platform proactively:
 
-* proactively fixes vulnerabilities
-* prevents sprint-end merge blockers
+* fixes vulnerabilities
 * reduces manual remediation effort
 * improves engineering velocity
-* integrates directly into DevSecOps workflows
+* prevents merge blockers
+* integrates directly into enterprise DevSecOps workflows
 
-using:
-
-* OpenAI Agents SDK
-* MCP
-* GitLab
-* Spring Boot
-* Maven
-* Python orchestration
-
-This is EXACTLY the kind of focused, production-grade AI engineering project that stands out in 2026.
-
-[1]: https://gitlab.com/gitlab-org/gitlab/-/issues/383504?utm_source=chatgpt.com "Java Spring Boot: Dependency Scanning (#383504) · Issue"
-[2]: https://security.snyk.io/package/maven/org.springframework.boot%3Aspring-boot/4.0.3?utm_source=chatgpt.com "org.springframework.boot:spring-boot 4.0.3"
+through intelligent AI-driven orchestration combined with deterministic runtime validation.
