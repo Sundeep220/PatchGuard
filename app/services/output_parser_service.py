@@ -9,7 +9,6 @@ class OutputParserService:
     Service for parsing and sanitizing raw text output,
     specifically to extract and validate JSON content.
     """
-
     @staticmethod
     def extract_json(
         raw_output: str

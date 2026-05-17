@@ -10,7 +10,6 @@ from app.services.terminal_service import (
 # Service for interacting with Maven's effective POM.
 # Provides methods to generate the effective POM and extract information from it.
 class EffectivePomService:
-
     # Namespace for Maven POM XML elements
     # This is crucial for correctly parsing XML with namespaces
     NAMESPACE = {
@@ -44,7 +43,7 @@ class EffectivePomService:
         output_path = temp_file.name
 
         # Run the Maven help:effective-pom goal to generate the effective POM
-        result = (
+        result = ( # nosec B603 - mvn help:effective-pom is safe here as arguments are hardcoded.
             TerminalService.run_command(
                 [
                     "mvn",
@@ -87,9 +86,6 @@ STDERR:
             set[str]: A set of strings, each representing a managed dependency
                       in the format "groupId:artifactId".
         """
-        # Parse the effective POM XML file
-
-        # Parse the effective POM XML file
         tree = ET.parse(
             effective_pom_path
         )
@@ -97,11 +93,7 @@ STDERR:
         root = tree.getroot()
 
         managed = set()
-        # Find all <dependency> elements within the <dependencyManagement> section
-        # using the defined Maven namespace.
-        
-        # Find all <dependency> elements within the <dependencyManagement> section
-        # using the defined Maven namespace.
+        # Find all <dependency> elements within the <dependencyManagement> section using the defined Maven namespace.
 
         dependencies = root.findall(
             ".//m:dependencyManagement/"
@@ -109,9 +101,7 @@ STDERR:
             "m:dependency",
             EffectivePomService.NAMESPACE
         )
-        # Iterate through found dependencies and extract groupId and artifactId
-        
-        # Iterate through found dependencies and extract groupId and artifactId
+        # Iterate through found dependencies and extract groupId and artifactId to build the set of managed dependencies.
 
         for dep in dependencies:
 

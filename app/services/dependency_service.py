@@ -1,6 +1,6 @@
 # Service for parsing and manipulating dependency strings.
 class DependencyService:
-    """
+    """ # pylint: disable=duplicate-code
     Service for parsing and manipulating dependency strings.
     """
 

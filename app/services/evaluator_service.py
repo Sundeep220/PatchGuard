@@ -71,7 +71,7 @@ class EvaluatorService:
         # This is the primary indicator of build stability.
 
         build_result = (
-            TerminalService.run_command(
+            TerminalService.run_command( # nosec B603 - mvn clean test is safe here as arguments are hardcoded.
                 ["mvn", "clean", "test"],
                 project_path
             )

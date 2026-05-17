@@ -1,0 +1,61 @@
+# Service for managing dependency compatibility rules and identifying related dependencies.
+class CompatibilityService:
+    """ # pylint: disable=duplicate-code
+    Service for managing dependency compatibility rules and identifying related dependencies.
+    """
+
+    # ------------------------------------
+    # Dependency family alignment rules
+    # ------------------------------------
+
+    # Defines groups of dependencies that are often released together or
+    # need to be kept in sync for compatibility (e.g., Jackson modules, Logback components).
+    DEPENDENCY_FAMILIES = {
+        # Logback family
+        "ch.qos.logback": [
+            "logback-classic",
+            "logback-core"
+        ],
+        # Jackson Core family
+        "com.fasterxml.jackson.core": [
+            "jackson-core",
+            "jackson-databind",
+            "jackson-annotations"
+        ]
+    }
+
+    @staticmethod
+    def find_family_members(
+        dependency: str
+    ):
+        """
+        Finds other dependencies that belong to the same "family" as the given dependency.
+        This can be useful for ensuring consistent upgrades across related libraries.
+
+        Args:
+            dependency (str): The dependency string in "groupId:artifactId" format.
+        Returns:
+            list[str]: A list of full dependency strings (groupId:artifactId)
+                       for other members of the same family, or an empty list if no family is found.
+        """
+
+        # Split the dependency string into groupId and artifactId
+        group_id, artifact_id = (
+            dependency.split(":")
+        )
+
+        # Look up the family members based on the groupId
+        family = (
+            CompatibilityService
+            .DEPENDENCY_FAMILIES
+            .get(group_id)
+        )
+
+        if not family:
+            # If no family is defined for this groupId, return an empty list
+            return []
+
+        return [
+            f"{group_id}:{member}"
+            for member in family
+        ]

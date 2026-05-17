@@ -26,7 +26,7 @@ class RiskAnalysisService:
 
         warnings = []
 
-        # ------------------------------------
+        # ------------------------------------ # Check for Jackson ecosystem duplication (2.x and 3.x coexisting).
         # Jackson ecosystem duplication
         # ------------------------------------
 
@@ -58,7 +58,7 @@ class RiskAnalysisService:
                 )
             )
 
-        # Detects multiple instances of 'logback-classic' which might indicate version conflicts
+        # ------------------------------------ # Detects multiple instances of 'logback-classic' which might indicate version conflicts.
 
         duplicate_logback = (
             len(
@@ -105,7 +105,7 @@ class RiskAnalysisService:
         if not build_passed:
             return 0
 
-        score = 100
+        score = 100 # Start with a perfect score if the build passed.
 
         for warning in warnings:
             # Deduct points based on severity of the warning

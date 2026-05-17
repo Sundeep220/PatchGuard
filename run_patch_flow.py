@@ -39,7 +39,7 @@ Solution: {v.solution}
             for v in report.vulnerabilities
         ]
     )
-    # Run the main remediation loop
+    # Run the main remediation loop with the identified vulnerabilities.
     result = await (
         RemediationLoopService.run_loop(
             project_path=

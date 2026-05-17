@@ -24,7 +24,7 @@ class PomService:
         """
         Removes the explicit <version> tag from a dependency in the pom.xml.
         This is typically used for BOM-managed dependencies where the version
-        should be inherited from dependencyManagement.
+        should be inherited from the `<dependencyManagement>` section.
 
         Args:
             pom_path (str): The path to the project's pom.xml file.
@@ -44,7 +44,7 @@ class PomService:
 
         root = tree.getroot()
 
-        # Find all <dependency> elements in the POM
+        # Find all direct <dependency> elements in the POM.
 
         dependencies = root.findall(
             ".//m:dependency",
@@ -52,7 +52,7 @@ class PomService:
         )
 
         removed = False
-        # Iterate through dependencies to find the target and remove its version
+        # Iterate through found dependencies to find the target and remove its version element.
 
         for dep in dependencies:
 
@@ -77,7 +77,7 @@ class PomService:
                 and version is not None
             ):
 
-                # If groupId and artifactId match, remove the version element
+                # If groupId and artifactId match the target, remove the <version> element.
                 if (
                     gid.text == group_id
                     and aid.text == artifact_id
@@ -87,7 +87,7 @@ class PomService:
 
                     removed = True
 
-        # If no version was removed, raise an exception
+        # If no matching dependency with an explicit version was found and removed, raise an exception.
         if not removed:
             raise Exception(
                 f"Dependency version not found: "
@@ -95,7 +95,7 @@ class PomService:
             )
 
         tree.write(
-            # Write the modified tree back to the POM file
+            # Write the modified XML tree back to the POM file, preserving formatting.
             pom_file,
             encoding="utf-8",
             xml_declaration=True
@@ -127,7 +127,7 @@ class PomService:
 
         root = tree.getroot()
 
-        # List to store all found dependencies
+        # List to store all declared dependencies (parent and direct).
 
         dependencies = []
 
@@ -136,7 +136,7 @@ class PomService:
         # ------------------------------------
 
         parent = root.find(
-            # Find the <parent> element
+            # Find the <parent> element in the POM.
             "m:parent",
             PomService.NAMESPACE
         )
@@ -157,7 +157,7 @@ class PomService:
                 "m:version",
                 PomService.NAMESPACE
             )
-            # Add parent dependency details to the list
+            # Add parent dependency details to the list.
 
             dependencies.append({
                 "dependency":
@@ -174,7 +174,7 @@ class PomService:
         # Normal dependencies
         # ------------------------------------
 
-        # Find all direct <dependency> elements
+        # Find all direct <dependency> elements within the `<dependencies>` section.
         deps = root.findall(
             ".//m:dependency",
             PomService.NAMESPACE
@@ -182,7 +182,7 @@ class PomService:
 
         for dep in deps:
 
-            # Extract groupId, artifactId, and version for each direct dependency
+            # Extract groupId, artifactId, and version for each direct dependency.
             gid = dep.find(
                 "m:groupId",
                 PomService.NAMESPACE
@@ -197,7 +197,7 @@ class PomService:
                 "m:version",
                 PomService.NAMESPACE
             )
-            # Determine if the dependency is managed (version is not explicitly declared)
+            # Determine if the dependency is managed (version is not explicitly declared) or explicitly declared.
 
             dependencies.append({
                 "dependency":
@@ -248,7 +248,7 @@ class PomService:
         root = tree.getroot()
 
         updated = False
-        # List to track all changes made
+        # List to track all changes made during the update.
 
         changes = []
 
@@ -260,7 +260,7 @@ class PomService:
             "m:parent",
             PomService.NAMESPACE
         )
-        # Check if the target dependency is the parent
+        # Check if the target dependency to update is the project's parent.
 
         if parent is not None:
 
@@ -284,7 +284,7 @@ class PomService:
                 and aid.text == artifact_id
             ):
 
-                # Update parent version
+                # Update the parent's version.
                 old_version = version.text
 
                 version.text = new_version
@@ -304,7 +304,7 @@ class PomService:
         # Update explicit dependencies ONLY
         # ------------------------------------
 
-        # Find all direct <dependency> elements
+        # Find all direct <dependency> elements within the `<dependencies>` section.
         dependencies = root.findall(
             ".//m:dependency",
             PomService.NAMESPACE
@@ -335,7 +335,7 @@ class PomService:
                 gid.text == group_id
                 and aid.text == artifact_id
             ):
-                # Update direct dependency version
+                # Update the direct dependency's version.
 
                 old_version = version.text
 
@@ -352,7 +352,7 @@ class PomService:
                         new_version
                 })
 
-        # If no dependency was updated, raise an exception
+        # If no matching dependency was found and updated, raise an exception.
         if not updated:
             raise Exception(
                 f"Dependency not found: "
@@ -360,7 +360,7 @@ class PomService:
             )
 
         tree.write(
-            # Write the modified tree back to the POM file
+            # Write the modified XML tree back to the POM file, preserving formatting.
             pom_file,
             encoding="utf-8",
             xml_declaration=True

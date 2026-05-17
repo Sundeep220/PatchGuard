@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 """
-This is the main entry point for the PatchPilot AI FastAPI application.
+This is the main entry point for the PatchPilot AI FastAPI application. # pylint: disable=duplicate-code
 It initializes the FastAPI app and defines basic routes.
 """
 

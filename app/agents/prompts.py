@@ -1,7 +1,7 @@
 """
 This module stores the prompt templates used by the remediation agent.
 Separating prompts into a dedicated file improves maintainability and readability.
-"""
+""" # pylint: disable=duplicate-code
 
 INITIAL_PLANNING_PROMPT = """
 You are an autonomous dependency remediation agent.

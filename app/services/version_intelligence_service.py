@@ -33,7 +33,7 @@ class VersionIntelligenceService:
 
         versions = defaultdict(set)
 
-        for dep in graph.dependencies:
+        for dep in graph.dependencies: # Iterate through each resolved dependency in the graph.
 
             # Use artifact_id as the key to group versions of the same dependency
             key = dep.artifact_id
@@ -43,7 +43,7 @@ class VersionIntelligenceService:
             )
 
             versions[key].add(major)
-        
+
 
         for dep_name, majors in versions.items():
 
@@ -83,7 +83,7 @@ class VersionIntelligenceService:
 
         versions = defaultdict(set)
 
-        for dep in graph.dependencies:
+        for dep in graph.dependencies: # Iterate through each resolved dependency in the graph.
             # Use groupId:artifactId as the key to group all resolved versions
 
             key = (

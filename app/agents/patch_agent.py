@@ -1,6 +1,7 @@
 from agents import Agent
+
 """
-This module defines the PatchPilot agent, an autonomous dependency remediation agent.
+This module defines the PatchPilot agent, an autonomous dependency remediation agent. # pylint: disable=duplicate-code
 """
 
 

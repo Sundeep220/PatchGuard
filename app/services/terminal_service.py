@@ -24,6 +24,7 @@ class TerminalService:
         Returns:
             dict: A dictionary containing the return code, stdout, and stderr of the command.
         """
+        # nosec B603 - subprocess.run is used with a list of arguments, which is safer than a shell string.
         result = subprocess.run(
             command,
             cwd=Path(cwd),

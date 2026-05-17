@@ -27,7 +27,7 @@ class DependencyTreeService:
         """
 
         result = (
-            TerminalService.run_command(
+            TerminalService.run_command( # nosec B603 - mvn dependency:tree is safe here as arguments are hardcoded.
                 [
                     "mvn",
                     "dependency:tree"

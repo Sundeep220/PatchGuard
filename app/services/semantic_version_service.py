@@ -32,7 +32,7 @@ class SemanticVersionService:
             target_version.split(".")[0]
         )
 
-        # If major versions differ, it's a potential breaking change and a warning
+        # If major versions differ, it's a potential breaking change and should be flagged as a warning.
         if current_major != target_major:
 
             return RiskItem(

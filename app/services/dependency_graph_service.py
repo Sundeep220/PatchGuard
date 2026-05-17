@@ -42,7 +42,7 @@ class DependencyGraphService:
 
         for line in lines:
 
-            # Attempt to match the pattern in each line
+            # Attempt to match the dependency pattern in each line.
             match = pattern.search(line)
 
             if not match:
@@ -56,7 +56,7 @@ class DependencyGraphService:
 
             scope = match.group(4)
 
-            # Estimate dependency depth based on indentation characters
+            # Estimate dependency depth based on indentation characters (pipes, pluses, backslashes).
             # Estimate depth
             depth = (
                 line.count("|")

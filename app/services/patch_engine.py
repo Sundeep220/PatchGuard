@@ -36,7 +36,7 @@ class PatchEngine:
             dict: A dictionary indicating the status of the operation.
         """
 
-        # Handle 'update_dependency' action
+        # Handle the 'update_dependency' action.
         if operation.action == "update_dependency":
 
             parsed = (
@@ -55,7 +55,7 @@ class PatchEngine:
             )
 
         # Handle 'remove_explicit_version' action
-        elif (
+        elif ( # Handle the 'remove_explicit_version' action.
             operation.action
             == "remove_explicit_version"
         ):

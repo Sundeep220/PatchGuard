@@ -76,7 +76,7 @@ class RemediationLoopService:
         # ------------------------------------
 
         effective_pom = (
-            EffectivePomService.generate_effective_pom(
+            EffectivePomService.generate_effective_pom( # Generate the effective POM to understand managed dependencies.
                 project_path
             )
         )
@@ -90,7 +90,7 @@ class RemediationLoopService:
         # Initialize retry state and history for the iterative loop
         retry_state = RetryState(
             current_attempt=0,
-            max_attempts=10
+            max_attempts=10 # Define maximum attempts for the remediation loop.
         )
 
         # Stores a history of attempts, including the plan, success status, and errors
@@ -114,7 +114,7 @@ class RemediationLoopService:
             # Create git checkpoint
             # ------------------------------------
             # A checkpoint allows rolling back changes if an attempt fails.
-
+            # This ensures that each attempt starts from a clean, known state.
             CheckpointService.create_checkpoint(
                 project_path
             )
@@ -124,7 +124,7 @@ class RemediationLoopService:
             # ------------------------------------
 
             if retry_state.current_attempt == 0:
-                # For the first attempt, use the initial planning prompt
+                # For the first attempt, use the initial planning prompt to generate a remediation plan.
                 agent_prompt = INITIAL_PLANNING_PROMPT.format(
                     vulnerabilities_text=vulnerabilities_text,
                     managed_dependencies=sorted(managed_dependencies)
@@ -135,9 +135,9 @@ class RemediationLoopService:
             # ------------------------------------
 
             else:
-
                 # For subsequent attempts, use the optimizer prompt,
                 # providing feedback from the previous failed attempt.
+                # This allows the agent to learn from past mistakes and generate a corrective plan.
                 agent_prompt = OPTIMIZER_FAILURE_PROMPT.format(
                     vulnerabilities_text=vulnerabilities_text,
                     managed_dependencies=sorted(managed_dependencies),
@@ -153,7 +153,7 @@ class RemediationLoopService:
 
             result = await Runner.run(
                 patch_agent,
-                # The agent receives the prompt and generates a remediation plan
+                # The agent receives the prompt and generates a remediation plan in JSON format.
                 agent_prompt
             )
 
@@ -165,7 +165,7 @@ class RemediationLoopService:
             # Parse + sanitize JSON
             # ------------------------------------
 
-            # Attempt to extract and validate the JSON remediation plan from the agent's output
+            # Attempt to extract and validate the JSON remediation plan from the agent's raw output.
             try:
 
                 sanitized_output = (
@@ -175,6 +175,7 @@ class RemediationLoopService:
                 )
 
                 plan = (
+                    # Validate the extracted JSON against the RemediationPlan Pydantic schema.
                     RemediationPlan
                     .model_validate_json(
                         sanitized_output
@@ -199,7 +200,7 @@ Raw Output:
             # Apply remediation plan
             # ------------------------------------
 
-            # Log the plan and apply it to the pom.xml file
+            # Log the generated plan and apply its operations to the pom.xml file.
             print(
                 "\nApplying remediation plan:"
             )
@@ -215,7 +216,7 @@ Raw Output:
             # Evaluate remediation
             # ------------------------------------
 
-            # Evaluate the project after applying the patch
+            # Evaluate the project's state after applying the patch, checking build status and residual vulnerabilities.
             evaluation = (
                 EvaluatorService.evaluate(
                     project_path,
@@ -229,7 +230,7 @@ Raw Output:
             # Save attempt history
             # ------------------------------------
 
-            # Record the outcome of the current attempt for future agent reasoning
+            # Record the outcome of the current attempt for future agent reasoning and optimization.
             attempt_history.append({
                 "attempt":
                     retry_state.current_attempt + 1,
@@ -248,7 +249,7 @@ Raw Output:
             # SUCCESS
             # ------------------------------------
 
-            # If the build passed, and no critical vulnerabilities remain, remediation is successful
+            # If the build passed and no critical vulnerabilities remain, the remediation is considered successful.
             if evaluation.build_passed:
 
                 print(
@@ -281,7 +282,7 @@ Raw Output:
             # FAILURE
             # ------------------------------------
 
-            # If the build failed, log errors and prepare for rollback
+            # If the build failed, log the errors and prepare for rollback to the previous checkpoint.
             print(
                 "\n=== BUILD FAILED ==="
             )
@@ -298,7 +299,7 @@ Raw Output:
             # Rollback failed changes
             # ------------------------------------
 
-            # Revert changes made in the current attempt to restore the previous state
+            # Revert changes made in the current attempt to restore the project to its state before this attempt.
             print(
                 "\nRolling back failed changes..."
             )
@@ -307,7 +308,7 @@ Raw Output:
                 project_path
             )
 
-            # Increment attempt counter
+            # Increment the attempt counter and continue the loop if max attempts are not reached.
             retry_state.current_attempt += 1
 
         raise Exception(
